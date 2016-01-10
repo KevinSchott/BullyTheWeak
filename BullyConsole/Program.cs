@@ -16,12 +16,11 @@ namespace BullyConsole
             
 
             var api = new ApiService(apikey);
-            var sdr = new SummonerDataRequest(api);
+            var dr = new DataRequest(api);
 
-            var sd = sdr.GetSummonerByName(ApiRegion.NA, "n3ac3y");
+            var sd = dr.GetSummonerByName(ApiRegion.NA, "n3ac3y");
 
-            var cgdr = new CurrentGameDataRequest(api);
-            var cgd = cgdr.GetCurrentGameData(ApiRegion.NA, sd.Id);
+            var cgd = dr.GetCurrentGameData(ApiRegion.NA, sd.Id);
 
             Console.WriteLine("Data for " + sd.Name);
             if (cgd == null)

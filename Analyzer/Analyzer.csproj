@@ -7,7 +7,7 @@
     <ProjectGuid>{C6F7CFB4-E9CF-431C-B496-66451A8D443B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DataAccess</RootNamespace>
+    <RootNamespace>Analyzer</RootNamespace>
     <AssemblyName>DataAccess</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -47,11 +47,11 @@
   <ItemGroup>
     <Compile Include="ApiService.cs" />
     <Compile Include="CurrentGameData.cs" />
-    <Compile Include="CurrentGameDataRequest.cs" />
+    <Compile Include="DataRequest.cs" />
+    <Compile Include="IAnalyzer.cs" />
     <Compile Include="IApiService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SummonerData.cs" />
-    <Compile Include="SummonerDataRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

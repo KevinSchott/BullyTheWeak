@@ -10,6 +10,6 @@ namespace Analyzer
 
     public interface IApiService
     {
-        JObject GetData(ApiRegion region, string requestParams);
+        JObject GetData(ApiRegion region, string urlPattern);
     }
 }

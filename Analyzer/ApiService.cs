@@ -19,9 +19,9 @@ namespace Analyzer
         }
 
 
-        public JObject GetData(ApiRegion region, string requestParams)
+        public JObject GetData(ApiRegion region, string urlPattern)
         {
-            var requestUrl = GetRequestUrl(region, requestParams);
+            var requestUrl = GetRequestUrl(region, urlPattern);
 
             var request = WebRequest.Create(requestUrl + "?api_key=" + apiKey);
             try
