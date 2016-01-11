@@ -18,7 +18,9 @@ namespace BullyConsole
             var api = new ApiService(apikey);
             var dr = new DataRequest(api);
 
-            var sd = dr.GetSummonerByName(ApiRegion.NA, "n3ac3y");
+            var smnname = ConfigurationManager.AppSettings["SummonerName"].ToString();
+
+            var sd = dr.GetSummonerByName(ApiRegion.NA, smnname);
 
             var cgd = dr.GetCurrentGameData(ApiRegion.NA, sd.Id);
 
@@ -27,6 +29,7 @@ namespace BullyConsole
             {
                 Console.WriteLine(sd.Name + " is not currently in a game.");
                 End();
+                return;
             }
 
             var blues = cgd.TeamMembers.Where(t => t.IsBlueTeam).ToList();
@@ -36,7 +39,11 @@ namespace BullyConsole
             blues.ForEach(t => PrintMember(t));
             Console.WriteLine("\nRed Team");
             reds.ForEach(t => PrintMember(t));
+
+
+
             End();
+            return;
         }
 
         static void PrintMember(TeamMember member)

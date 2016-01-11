@@ -10,17 +10,32 @@ namespace Analyzer
     public class DataRequest
     {
         protected IApiService api;
+        protected Dictionary<ApiRegion, string> regionCodes;
+        protected Dictionary<ApiRegion, string> regionCodesAlt;
+        
 
         public DataRequest (IApiService apiService)
         {
             api = apiService;
+            regionCodes = new Dictionary<ApiRegion, string>
+            {
+                {ApiRegion.NA, "na" },
+                {ApiRegion.EUW, "euw"}
+            };
+
+            regionCodesAlt = new Dictionary<ApiRegion, string>
+            {
+                {ApiRegion.NA, "NA1" },
+                {ApiRegion.EUW, "EUW1"}
+            };
         }
 
         public SummonerData GetSummonerByName(ApiRegion region, string name)
         {
-             const string urlPattern = "api/lol/na/v1.4/summoner/by-name/";
+            string summonerByNameUrl = string.Format("api/lol/{0}/v1.4/summoner/by-name/{1}",
+                regionCodes[region], name);
 
-            var fetch = api.GetData(ApiRegion.NA, urlPattern + name);
+            var fetch = api.GetData(region, summonerByNameUrl);
             if (fetch == null)
                 return null;
 
@@ -37,7 +52,10 @@ namespace Analyzer
 
         public CurrentGameData GetCurrentGameData(ApiRegion region, long summonerId)
         {
-            var data = api.GetData(ApiRegion.NA, BuildUrlPattern(region, summonerId));
+            string currentGameDataUrl = string.Format("observer-mode/rest/consumer/getSpectatorGameInfo/{0}/{1}",
+                regionCodesAlt[region], summonerId);
+
+            var data = api.GetData(region, currentGameDataUrl);
             if (data == null)
                 return null;
 
@@ -51,26 +69,25 @@ namespace Analyzer
                 {
                     SummonerId = t["summonerId"].Value<long>(),
                     SummonerName = t["summonerName"].Value<string>(),
+                    ChampionId = t["championId"].Value<long>(),
                     IsBlueTeam = t["teamId"].Value<long>() == 100
                 }).ToList()
             };
         }
 
-        private string BuildUrlPattern(ApiRegion region, long summonerId)
-        {
-            const string urlPattern = "observer-mode/rest/consumer/getSpectatorGameInfo/";
 
-            string basePattern = null;
-            switch (region)
+        public RecentGameData GetRecentGameData(ApiRegion region, long summonerId)
+        {
+            string recentGameDataUrl = string.Format("/api/lol/{0}/v1.3/game/by-summoner/{1}/recent",
+                regionCodes[region], summonerId);
+
+            var data = api.GetData(region, recentGameDataUrl);
+            if (data == null)
+                return null;
+
+            return new RecentGameData
             {
-                case ApiRegion.NA:
-                    basePattern = urlPattern + "NA1";
-                    break;
-                case ApiRegion.EUW:
-                    basePattern = urlPattern + "EUW1";
-                    break;
-            }
-            return basePattern + "/" + summonerId + "/";
+            };
         }
     }
 }

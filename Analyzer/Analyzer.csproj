@@ -50,7 +50,9 @@
     <Compile Include="DataRequest.cs" />
     <Compile Include="IAnalyzer.cs" />
     <Compile Include="IApiService.cs" />
+    <Compile Include="IUrlBuilder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecentGameData.cs" />
     <Compile Include="SummonerData.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -7,6 +7,7 @@ namespace Analyzer
     {
         public long SummonerId { get; set; }
         public string SummonerName { get; set; }
+        public long ChampionId { get; set; }
         public bool IsBlueTeam { get; set; }
     }
 
